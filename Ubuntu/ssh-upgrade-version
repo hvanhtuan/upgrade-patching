@@ -1,1 +1,22 @@
+===== HOW TO UPGRADE OPENSSH TO LATEST VERSION ON UBUNTU =====
 
+Step 1. Install PAM, SELinux Headers and C library
+sudo apt-get -y install zlib1g-dev libpam0g-dev libselinux1-dev build-essential libssl-dev libselinux1-dev
+
+Step 2: Download the latest version (openssh-9.8p1)
+wget https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.8p1.tar.gz
+
+Step 3. Extract the Downloaded File
+tar -zxvf openssh-9.8p1.tar.gz
+
+Step 4: Build and Install OpenSSH
+cd openssh-9.8p1
+./configure --with-pam --with-selinux --with-privsep-path=/var/lib/sshd/ --sysconfdir=/etc/ssh
+make
+sudo make install
+
+Step 5: Reload the SSH Service
+systemctl restart sshd
+
+Step 6. Verification of Installation
+ssh -V
